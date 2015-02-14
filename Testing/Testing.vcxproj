@@ -73,10 +73,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="jab.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="jab.h" />
+    <ClInclude Include="level.h" />
+    <ClInclude Include="player.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SchoolEngine\SchoolEngine.vcxproj">
