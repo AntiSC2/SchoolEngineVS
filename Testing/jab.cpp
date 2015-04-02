@@ -20,5 +20,5 @@ void Jab::update() {
 }
 
 void Jab::render(SpriteBatch* batch) {
-	batch->draw(destRect, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), texID, 0.0f, Color(255, 255, 255, 255));
+	batch->draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), texID, 0.0f, Color(255, 255, 255, 255));
 }

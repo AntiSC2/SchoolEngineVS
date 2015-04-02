@@ -2,7 +2,7 @@
 #include "Engine.h"
 
 class SpriteFont;
-class Player;
+class Level;
 
 class Game {
 public:
@@ -13,7 +13,7 @@ public:
 	Engine e;
 private:
 	SpriteFont* spritefont = nullptr;
-	Player* player;
+	Level* level;
 	void init();
 	void quit();
 	void gameLoop();

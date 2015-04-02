@@ -1,3 +1,4 @@
+//Copyright 2015 How2Game&Wizardy
 #include <glm/glm.hpp>
 #ifndef GLEW_BUILD
 #define GLEW_BUILD
@@ -15,10 +16,13 @@ public:
 	void render(SpriteBatch* batch);
 
 	bool createJab = false;
+	bool direction = 0;
+	int returnX();
+	int returnY();
 private:
 	glm::ivec4 destRect;
 	bool jump = false;
-	int speed = 3;
-	int attack = 3, defence = 3, weight = 6, wizarding = 3, yvel = 0, gravity = 2;
+	int speed = 6;
+	int attack = 3, defence = 3, weight = 0, wizarding = 3, yvel = 0, gravity = 2;
 	GLuint texID = 0;
 };

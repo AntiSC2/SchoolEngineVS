@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <Managers/rm.h>
 #include <Graphics/spritefont.h>
-#include "player.h"
+#include "level.h"
 
 Game::Game() {
 	;
@@ -11,8 +11,8 @@ Game::Game() {
 Game::~Game() {
 	delete spritefont;
 	spritefont = nullptr;
-	delete player;
-	player = nullptr;
+	delete level;
+	level = nullptr;
 }
 
 void Game::run() {
@@ -31,12 +31,12 @@ void Game::init() {
 
 void Game::gameLoop() {
 	spritefont = new SpriteFont("resources/fonts/font.ttf", 64);
-	player = new Player(0, 464);
+	level = new Level;
 
 	const double dt = 16.6666666;
 
 	uint32_t currentTime = SDL_GetTicks();
-	uint32_t accumulator = 0;
+	double accumulator = 0;
 	uint32_t timer = 0;
 	uint16_t frames = 0, updates = 0;
 
@@ -70,7 +70,7 @@ void Game::quit() {
 void Game::update() {
 	e.input->update();
 	e.camera->update();
-	player->update();
+	level->update();
 }
 
 void Game::draw() {
@@ -78,7 +78,7 @@ void Game::draw() {
 	e.screen->render();
 	e.shaders[0]->setCameraMatrix(e.camera->getCameraMatrix());
 	e.TheBatch->begin();
-	player->render(e.TheBatch);
+	level->drawLevel(e.TheBatch);
 	//spritefont->draw(e.TheBatch, "Testing", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), 0.0f, Color(255, 255, 255, 255));
 	//e.TheBatch->draw(glm::vec4(0, 0, 128, 256), glm::vec4(0, 0, 1, 1), RM::TextureCache->createTexture("resources/textures/wizard1.png")->getID(), 0.0f, Color(255, 255, 255, 255));
 	e.TheBatch->end();

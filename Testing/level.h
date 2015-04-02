@@ -1,5 +1,6 @@
 #include <vector>
 #include "jab.h"
+#include "ai.h"
 #ifndef GLEW_BUILD
 #define GLEW_BUILD
 #endif
@@ -19,4 +20,5 @@ private:
 	GLuint backgroundID = 0;
 	std::vector<Jab> jabs;
 	Player* player;
+	AI* ai;
 };
