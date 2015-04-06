@@ -22,7 +22,6 @@ public:
 private:
 	glm::ivec4 destRect;
 	bool jump = false;
-	int speed = 6;
-	int attack = 3, defence = 3, weight = 0, wizarding = 3, yvel = 0, gravity = 2;
+	int speed = 6, attack = 3, defence = 3, weight = 0, wizarding = 3, yvel = 0, gravity = 2, jabCoolDown = 0;
 	GLuint texID = 0;
 };

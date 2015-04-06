@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <vector>
 #include "Vertex.h"
-
+///This class handles a glyph(a sprite that is going to be rendered)
 class Glyph {
    public:
       Glyph() {
@@ -42,14 +42,14 @@ class Glyph {
       Vertex bottomLeft;
       Vertex bottomRight;
 };
-
+///Enum class that says how the glyphs should be sorted
 enum class GlyphSortType {
    NONE,
    FRONT_TO_BACK,
    BACK_TO_FRONT,
    TEXTURE
 };
-
+///This class handles rendering multiple glyphs
 class RenderBatch {
    public:
       RenderBatch(GLuint offSet, GLuint numvertices, GLuint teXture) : offset(offSet), numVertices(numvertices), texture(teXture) {
@@ -59,33 +59,43 @@ class RenderBatch {
       GLuint numVertices;
       GLuint texture;
 };
-
+///This class is the main class of the rendering process
 class SpriteBatch {
    public:
+	  ///Basic constructor
       SpriteBatch();
       ~SpriteBatch();
-
+	  ///This function initializes everything for the first time
       void init();
+	  ///This function cleans up the sprite batch so it's ready for a new draw call. It also determines how the glyphs are sorted
       void begin(GlyphSortType sortingType = GlyphSortType::TEXTURE);
+	  ///This function makes sure the SpriteBatch is ready to render
       void end();
+	  ///This function draws something to the SpriteBatch
       void draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color &color);
+	  ///This function renders everything that has been drawn to the sprite batch to the screen
       void renderDraw();
 
    private:
+	  //Sorts all the glyphs
       void sortGlyphs();
+	  //Creates the render batches from the glyphs
       void createRenderBatches();
-
+	  //Functions that is used to sort the glyphs
       static bool compareFrontToBack(Glyph* a, Glyph* b);
       static bool compareBackToFront(Glyph* a, Glyph* b);
       static bool compareTexture(Glyph* a, Glyph* b);
-
+	  //Varible that stores how the glyphs should be sorted
       GlyphSortType sortType;
-
+	  //Varible that stores pointers to the glyphs, is used for sorting
       std::vector<Glyph*> GlyphsPointers;
+	  //Varible that stores the actual glyphs
       std::vector<Glyph> Glyphs;
+	  //Varible that stores the render batches
       std::vector<RenderBatch> RenderBatches;
-
+	  //Varible that stores the ID of the vertex buffer object that is used for rendering
       GLuint vboID;
+	  //Varible that store the ID of the vertex array object
       GLuint vaoID;
 };
 

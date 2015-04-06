@@ -29,8 +29,12 @@ void Player::update() {
 		jump = true;
 		yvel = -50 + (weight * 5);
 	}
-	if (Input::keyPressed(SDL_SCANCODE_SPACE) && createJab == false) {
+	if (Input::keyTyped(SDL_SCANCODE_SPACE) && createJab == false && jabCoolDown == 0) {
 		createJab = true;
+		jabCoolDown = 10;
+	}
+	if (jabCoolDown > 0) {
+		jabCoolDown--;
 	}
 	destRect.y += yvel;
 	yvel += gravity;
