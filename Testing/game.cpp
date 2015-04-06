@@ -3,6 +3,7 @@
 #include <Managers/rm.h>
 #include <Graphics/spritefont.h>
 #include "level.h"
+#include <Graphics/particleengine2D.h>
 
 Game::Game() {
 	;
@@ -13,6 +14,8 @@ Game::~Game() {
 	spritefont = nullptr;
 	delete level;
 	level = nullptr;
+	delete bloodBatch;
+	bloodBatch = nullptr;
 }
 
 void Game::run() {
@@ -31,6 +34,8 @@ void Game::init() {
 
 void Game::gameLoop() {
 	spritefont = new SpriteFont("resources/fonts/font.ttf", 64);
+	bloodBatch = new ParticleBatch2D;
+	bloodBatch->initParticles(1000, 0.1f);
 	level = new Level;
 
 	const double dt = 16.6666666;
@@ -70,6 +75,8 @@ void Game::quit() {
 void Game::update() {
 	e.input->update();
 	e.camera->update();
+	bloodBatch->addParticle(glm::vec2(500, 300), glm::vec2(rand()%20 - 10, rand()%20 - 10), 5, 5, Color(180, 0, 0, 255));
+	bloodBatch->update();
 	level->update();
 }
 
@@ -79,6 +86,7 @@ void Game::draw() {
 	e.shaders[0]->setCameraMatrix(e.camera->getCameraMatrix());
 	e.TheBatch->begin();
 	level->drawLevel(e.TheBatch);
+	bloodBatch->render(e.TheBatch);
 	//spritefont->draw(e.TheBatch, "Testing", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), 0.0f, Color(255, 255, 255, 255));
 	//e.TheBatch->draw(glm::vec4(0, 0, 128, 256), glm::vec4(0, 0, 1, 1), RM::TextureCache->createTexture("resources/textures/wizard1.png")->getID(), 0.0f, Color(255, 255, 255, 255));
 	e.TheBatch->end();

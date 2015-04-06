@@ -72,6 +72,7 @@
   <ItemGroup>
     <ClCompile Include="Camera\camera2D.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Graphics\particlengine2D.cpp" />
     <ClCompile Include="Graphics\screen.cpp" />
     <ClCompile Include="Graphics\shader.cpp" />
     <ClCompile Include="Graphics\sprite.cpp" />
@@ -87,6 +88,7 @@
   <ItemGroup>
     <ClInclude Include="Camera\camera2D.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Graphics\particleengine2D.h" />
     <ClInclude Include="Graphics\screen.h" />
     <ClInclude Include="Graphics\shader.h" />
     <ClInclude Include="Graphics\sprite.h" />
