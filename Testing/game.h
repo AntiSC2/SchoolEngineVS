@@ -4,6 +4,7 @@
 class SpriteFont;
 class Level;
 class ParticleBatch2D;
+class ParticleEngine2D;
 
 class Game {
 public:
@@ -15,6 +16,7 @@ public:
 private:
 	SpriteFont* spritefont = nullptr;
 	ParticleBatch2D* bloodBatch;
+	ParticleEngine2D* bloodEngine;
 	Level* level;
 	void init();
 	void quit();

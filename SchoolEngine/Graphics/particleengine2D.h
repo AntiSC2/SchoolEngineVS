@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include "vertex.h"
 #include "texture.h"
+#include <vector>
 
 class SpriteBatch;
 
@@ -40,5 +41,17 @@ private:
 	Texture* particleTexture;
 };
 
-class ParticleEngine2D
+class ParticleEngine2D {
+public:
+	ParticleEngine2D();
+	~ParticleEngine2D();
+	///This function adds a batch to the engine, assumes that the batch has already been initialized.
+	void addBatch(ParticleBatch2D* batch);
+
+	void update();
+	void render(SpriteBatch* batch);
+
+private:
+	std::vector<ParticleBatch2D*> batches;
+};
 

@@ -82,3 +82,29 @@ void ParticleBatch2D::addParticle(const glm::vec2& position, const glm::vec2& ve
 	myParticles[0].height = height;
 	myParticles[0].color = color;
 }
+
+ParticleEngine2D::ParticleEngine2D() {
+	;
+}
+
+ParticleEngine2D::~ParticleEngine2D() {
+	for (const auto& p : batches) {
+		delete p;
+	}
+}
+
+void ParticleEngine2D::addBatch(ParticleBatch2D* batch) {
+	batches.push_back(batch);
+}
+
+void ParticleEngine2D::update() {
+	for (const auto& p : batches) {
+		p->update();
+	}
+}
+
+void ParticleEngine2D::render(SpriteBatch* batch) {
+	for (const auto& p : batches) {
+		p->render(batch);
+	}
+}

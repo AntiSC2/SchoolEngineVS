@@ -14,8 +14,8 @@ Game::~Game() {
 	spritefont = nullptr;
 	delete level;
 	level = nullptr;
-	delete bloodBatch;
-	bloodBatch = nullptr;
+	delete bloodEngine;
+	bloodEngine = nullptr;
 }
 
 void Game::run() {
@@ -30,12 +30,16 @@ void Game::init() {
 	e.initResources("resources/data/Game.data");
 	e.initShaders("resources/shaders/shader.vert", "resources/shaders/shader.frag");
 	e.camera->setPosition(glm::vec2(640, 360));
+	bloodEngine = new ParticleEngine2D;
+	bloodBatch = new ParticleBatch2D;
+	bloodBatch->initParticles(1000, 0.1f);
+	bloodEngine->addBatch(bloodBatch);
 }
 
 void Game::gameLoop() {
 	spritefont = new SpriteFont("resources/fonts/font.ttf", 64);
-	bloodBatch = new ParticleBatch2D;
-	bloodBatch->initParticles(1000, 0.1f);
+
+
 	level = new Level;
 
 	const double dt = 16.6666666;
@@ -76,7 +80,7 @@ void Game::update() {
 	e.input->update();
 	e.camera->update();
 	bloodBatch->addParticle(glm::vec2(500, 300), glm::vec2(rand()%20 - 10, rand()%20 - 10), 5, 5, Color(180, 0, 0, 255));
-	bloodBatch->update();
+	bloodEngine->update();
 	level->update();
 }
 
@@ -86,7 +90,7 @@ void Game::draw() {
 	e.shaders[0]->setCameraMatrix(e.camera->getCameraMatrix());
 	e.TheBatch->begin();
 	level->drawLevel(e.TheBatch);
-	bloodBatch->render(e.TheBatch);
+	bloodEngine->render(e.TheBatch);
 	//spritefont->draw(e.TheBatch, "Testing", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), 0.0f, Color(255, 255, 255, 255));
 	//e.TheBatch->draw(glm::vec4(0, 0, 128, 256), glm::vec4(0, 0, 1, 1), RM::TextureCache->createTexture("resources/textures/wizard1.png")->getID(), 0.0f, Color(255, 255, 255, 255));
 	e.TheBatch->end();
