@@ -29,13 +29,22 @@ void AI::update(Player* player) {
 	}
 	destRect.y -= yvel;
 	destRect.x += xvel;
+	if (destRect.y != 464) {
+		direction.x = destRect.x;
+		direction.y = destRect.y;
+		direction = glm::normalize(direction);
+	}
+	else {
+		direction.x = 1;
+		direction.y = 0;
+	}
 	if (xvel > 0)
 		xvel -= 1;
 	/*if (xvel < 0)
 		xvel += 1;*/
 	if (yvel > -10)
 		yvel -= 1;
-	if (destRect.y > 464) {
+	if (destRect.y >= 464) {
 		destRect.y = 464;
 		yvel = 0;
 		xvel = 0;
@@ -44,5 +53,5 @@ void AI::update(Player* player) {
 
 void AI::render(SpriteBatch* batch) {
 	//batch->draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), texID, 0.0f, Color(255, 0, 0, 255));
-	batch->draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), texID, 0.0f, Color(255, 0, 0, 255), 90.0f);
+	batch->draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), texID, 0.0f, Color(255, 0, 0, 255), direction);
 }

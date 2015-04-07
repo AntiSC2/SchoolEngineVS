@@ -20,4 +20,5 @@ public:
 private:
 	int difficulty = 3, yvel = 0;
 	GLuint texID;
+	glm::vec2 direction;
 };
