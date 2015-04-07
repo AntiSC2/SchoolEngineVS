@@ -43,5 +43,6 @@ void AI::update(Player* player) {
 }
 
 void AI::render(SpriteBatch* batch) {
-	batch->draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), texID, 0.0f, Color(255, 0, 0, 255));
+	//batch->draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), texID, 0.0f, Color(255, 0, 0, 255));
+	batch->draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), texID, 0.0f, Color(255, 0, 0, 255), 90.0f);
 }

@@ -16,6 +16,7 @@ class Glyph {
       Glyph(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color &color) {
          this->depth = depth;
          this->texture = texture;
+		 this->angle = 0.0f;
 
          this->bottomLeft.setPosition(destRect.x, destRect.y);
          this->bottomLeft.setUV(uvRect.x, uvRect.y);
@@ -34,13 +35,55 @@ class Glyph {
          this->topRight.setColor(color.r, color.g, color.b, color.a);
       }
 
+	  Glyph(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color &color, float angle) {
+		  this->depth = depth;
+		  this->texture = texture;
+		  this->angle = 0.0f;
+		  
+		  glm::vec2 halfDims(destRect.z / 2.0f, destRect.w / 2.0f);
+
+		  glm::vec2 tl(-halfDims.x, halfDims.y);
+		  glm::vec2 bl(-halfDims.x, -halfDims.y);
+		  glm::vec2 br(halfDims.x, -halfDims.y);
+		  glm::vec2 tr(halfDims.x, halfDims.y);
+
+		  tl = rotatePoint(tl, angle) + halfDims;
+		  bl = rotatePoint(bl, angle) + halfDims;
+		  br = rotatePoint(br, angle) + halfDims;
+		  tr = rotatePoint(tr, angle) + halfDims;
+
+		  this->bottomLeft.setPosition(destRect.x + bl.x, destRect.y + bl.y);
+		  this->bottomLeft.setUV(uvRect.x, uvRect.y);
+		  this->bottomLeft.setColor(color.r, color.g, color.b, color.a);
+
+		  this->bottomRight.setPosition(destRect.x + br.x, destRect.y + br.y);
+		  this->bottomRight.setUV(uvRect.x + uvRect.z, uvRect.y);
+		  this->bottomRight.setColor(color.r, color.g, color.b, color.a);
+
+		  this->topLeft.setPosition(destRect.x + tl.x, destRect.y + tl.y);
+		  this->topLeft.setUV(uvRect.x, uvRect.y + uvRect.w);
+		  this->topLeft.setColor(color.r, color.g, color.b, color.a);
+
+		  this->topRight.setPosition(destRect.x + tr.x, destRect.y + tr.y);
+		  this->topRight.setUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
+		  this->topRight.setColor(color.r, color.g, color.b, color.a);
+	  }
+
       GLuint texture;
       float depth;
+	  float angle;
 
       Vertex topLeft;
       Vertex topRight;
       Vertex bottomLeft;
       Vertex bottomRight;
+private:
+	glm::vec2 rotatePoint(glm::vec2 pos, float angle) {
+		glm::vec2 newW;
+		newW.x = pos.x * cos(angle) - pos.y * sin(angle);
+		newW.y = pos.x * sin(angle) + pos.y * cos(angle);
+		return newW;
+	}
 };
 ///Enum class that says how the glyphs should be sorted
 enum class GlyphSortType {
@@ -73,6 +116,8 @@ class SpriteBatch {
       void end();
 	  ///This function draws something to the SpriteBatch
       void draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color &color);
+	  void draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color &color, float angle);
+	  void draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color &color, const glm::vec2& dir);
 	  ///This function renders everything that has been drawn to the sprite batch to the screen
       void renderDraw();
 

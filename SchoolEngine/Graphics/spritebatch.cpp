@@ -53,8 +53,20 @@ void SpriteBatch::draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuin
    Glyphs.emplace_back(destRect, uvRect, texture, depth, color);
 }
 
-void SpriteBatch::renderDraw() {
+void SpriteBatch::draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color& color, float angle) {
+	angle = angle * ((atan(1) * 4) / 180);
+	Glyphs.emplace_back(destRect, uvRect, texture, depth, color, angle);
+}
 
+void SpriteBatch::draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color& color, const glm::vec2& dir) {
+	const glm::vec2 right(1.0f, 0.0f);
+	float angle = acos(glm::dot(right, dir));
+	if (dir.y < 0.0f)
+		angle = -angle;
+	Glyphs.emplace_back(destRect, uvRect, texture, depth, color, angle);
+}
+
+void SpriteBatch::renderDraw() {
    glBindVertexArray(vaoID);
 
    for(int i = 0; i < RenderBatches.size(); i++) {
