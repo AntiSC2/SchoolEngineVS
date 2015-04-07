@@ -2,12 +2,8 @@
 #include "SpriteBatch.h"
 #include "rm.h"
 
-void Particle::update() {
-	position += velocity;
-}
-
 ParticleBatch2D::ParticleBatch2D() {
-	particleTexture = RM::TextureCache->createTexture("resources/textures/white.png");
+	;
 }
 
 
@@ -15,9 +11,14 @@ ParticleBatch2D::~ParticleBatch2D() {
 	delete[] myParticles;
 }
 
-void ParticleBatch2D::initParticles(int p_maxParticles, float p_decayRate) {
+void ParticleBatch2D::initParticles(int p_maxParticles, float p_decayRate,
+									const char* texture,
+									std::function<void(Particle&)> p_updateFunc) {
+	
 	maxParticles = p_maxParticles;
 	decayRate = p_decayRate;
+	particleTexture = RM::TextureCache->createTexture(texture);
+	updateFunc = p_updateFunc;
 
 	myParticles = new Particle[maxParticles];
 }
@@ -25,7 +26,7 @@ void ParticleBatch2D::initParticles(int p_maxParticles, float p_decayRate) {
 void ParticleBatch2D::update() {
 	for (int i = 0; i < maxParticles; i++) {
 		if (myParticles[i].life > 0.0f) {
-			myParticles[i].update();
+			updateFunc(myParticles[i]);
 			myParticles[i].life -= decayRate;
 		}
 	}

@@ -3,14 +3,12 @@
 #include "vertex.h"
 #include "texture.h"
 #include <vector>
+#include <functional>
 
 class SpriteBatch;
 
 class Particle {
-	friend class ParticleBatch2D;
 public:
-	void update();
-private:
 	glm::vec2 position = glm::vec2(0, 0);
 	glm::vec2 velocity = glm::vec2(0, 0);
 	Color color = Color(255, 255, 255, 255);
@@ -18,13 +16,19 @@ private:
 	float life = 0.0f;
 };
 
+inline void defaultUpdateFunc(Particle& p) {
+	p.position += p.velocity;
+}
+
 class ParticleBatch2D
 {
 public:
 	ParticleBatch2D();
 	~ParticleBatch2D();
 
-	void initParticles(int p_maxParticles, float p_decayRate);
+	void initParticles(int p_maxParticles, float p_decayRate,
+					   const char* texture,
+					   std::function<void(Particle&)> p_updateFunc = defaultUpdateFunc);
 	void update();
 	void render(SpriteBatch* batch);
 	void addParticle(const glm::vec2& position,
@@ -38,6 +42,7 @@ private:
 	float decayRate = 0.1f;
 	int maxParticles;
 	int lastActiveParticle = 0;
+	std::function<void(Particle&)> updateFunc;
 	Texture* particleTexture;
 };
 

@@ -32,7 +32,7 @@ void Game::init() {
 	e.camera->setPosition(glm::vec2(640, 360));
 	bloodEngine = new ParticleEngine2D;
 	bloodBatch = new ParticleBatch2D;
-	bloodBatch->initParticles(1000, 0.1f);
+	bloodBatch->initParticles(1000, 0.1f, "resources/textures/white.png");
 	bloodEngine->addBatch(bloodBatch);
 }
 
