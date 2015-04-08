@@ -10,6 +10,7 @@ Game::Game() {
 }
 
 Game::~Game() {
+	spritefont->dispose();
 	delete spritefont;
 	spritefont = nullptr;
 	delete level;
@@ -37,8 +38,9 @@ void Game::init() {
 }
 
 void Game::gameLoop() {
-	spritefont = new SpriteFont("resources/fonts/font.ttf", 64);
-
+	spritefont = new SpriteFont("resources/fonts/chintzy.ttf", 32);
+	hudBatch = new SpriteBatch();
+	hudBatch->init();
 
 	level = new Level;
 
@@ -91,9 +93,12 @@ void Game::draw() {
 	e.TheBatch->begin();
 	level->drawLevel(e.TheBatch);
 	bloodEngine->render(e.TheBatch);
-	//spritefont->draw(e.TheBatch, "Testing", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), 0.0f, Color(255, 255, 255, 255));
 	//e.TheBatch->draw(glm::vec4(0, 0, 128, 256), glm::vec4(0, 0, 1, 1), RM::TextureCache->createTexture("resources/textures/wizard1.png")->getID(), 0.0f, Color(255, 255, 255, 255));
 	e.TheBatch->end();
 	e.TheBatch->renderDraw();
+	hudBatch->begin();
+	spritefont->draw(hudBatch, "the quick brown fox jumps over the lazy dog", glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f), 0.0f, Color(255, 255, 255, 255));
+	hudBatch->end();
+	hudBatch->renderDraw();
 	e.screen->update();
 }

@@ -27,9 +27,9 @@ void SpriteBatch::init() {
    glEnableVertexAttribArray(1);
    glEnableVertexAttribArray(2);
 
-   glVertexAttribPointer(0, 3, GL_INT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-   glVertexAttribPointer(2, 2, GL_INT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, UV));
+   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, UV));
 
    glBindVertexArray(0);
 }

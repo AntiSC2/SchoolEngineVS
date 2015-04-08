@@ -14,6 +14,7 @@ public:
 	void run();
 	Engine e;
 private:
+	SpriteBatch* hudBatch;
 	SpriteFont* spritefont = nullptr;
 	ParticleBatch2D* bloodBatch;
 	ParticleEngine2D* bloodEngine;

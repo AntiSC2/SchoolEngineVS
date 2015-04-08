@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 
 struct Position {
-   GLint x, y;
+   GLfloat x, y;
 };
 
 struct Color {
@@ -27,7 +27,7 @@ struct Vertex {
 
    Position UV;
 
-   void setPosition(GLint x, GLint y) {
+   void setPosition(GLfloat x, GLfloat y) {
       position.x = x;
       position.y = y;
    }
@@ -37,7 +37,7 @@ struct Vertex {
       color.b = b;
       color.a = a;
    }
-   void setUV(GLint x, GLint y) {
+   void setUV(GLfloat x, GLfloat y) {
       UV.x = x;
       UV.y = y;
    }
