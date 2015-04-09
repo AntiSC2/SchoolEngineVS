@@ -38,7 +38,7 @@ void Game::init() {
 }
 
 void Game::gameLoop() {
-	spritefont = new SpriteFont("resources/fonts/chintzy.ttf", 32);
+	spritefont = new SpriteFont("resources/fonts/chintzy.ttf", 64);
 	hudBatch = new SpriteBatch();
 	hudBatch->init();
 
