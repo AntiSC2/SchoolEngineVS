@@ -1,4 +1,5 @@
 #include "ai.h"
+#include <Graphics/particleengine2D.h>
 #include <Graphics/texture.h>
 #include <Managers/rm.h>
 #include "player.h"
@@ -16,7 +17,7 @@ AI::~AI() {
 	;
 }
 
-void AI::update(Player* player) {
+void AI::update(Player* player, ParticleBatch2D* batch) {
 	if (player->returnX() < destRect.x) {
 		destRect.x -= difficulty;
 	}
@@ -26,21 +27,27 @@ void AI::update(Player* player) {
 	if (knockback == true) {
 		yvel = 15;
 		knockback = false;
+		for (unsigned int i = 0; i < 50; i++) {
+			glm::vec2 particleDir(rand() % 20 - 10, rand() % 20 - 10);
+			batch->addParticle(glm::vec2(destRect.x, destRect.y),
+							   particleDir,
+							   rand() % 5 + 5, rand() % 5 +5 , Color(200, 0, 0, 255));
+		}
 	}
 	destRect.y -= yvel;
 	destRect.x += xvel;
 	if (destRect.y != 464) {
-		direction.x = destRect.x;
-		direction.y = destRect.y;
+		direction.x = xvel;
+		direction.y = yvel;
 		direction = glm::normalize(direction);
 	}
 	else {
 		direction.x = 1;
 		direction.y = 0;
 	}
-	if (xvel > 0)
+  /*if (xvel > 0)
 		xvel -= 1;
-	/*if (xvel < 0)
+	if (xvel < 0)
 		xvel += 1;*/
 	if (yvel > -10)
 		yvel -= 1;

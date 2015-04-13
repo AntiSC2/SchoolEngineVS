@@ -33,7 +33,11 @@ void Game::init() {
 	e.camera->setPosition(glm::vec2(640, 360));
 	bloodEngine = new ParticleEngine2D;
 	bloodBatch = new ParticleBatch2D;
-	bloodBatch->initParticles(1000, 0.1f, "resources/textures/white.png");
+	bloodBatch->initParticles(1000, 0.1f, "resources/textures/circle.png",
+							  [](Particle& p){
+		                                         p.position += p.velocity;
+	                                             p.color.a = 255.0f / p.life; 
+	});
 	bloodEngine->addBatch(bloodBatch);
 }
 
@@ -42,7 +46,7 @@ void Game::gameLoop() {
 	hudBatch = new SpriteBatch();
 	hudBatch->init();
 
-	level = new Level;
+	level = new Level(bloodBatch);
 
 	const double dt = 16.6666666;
 
@@ -81,9 +85,8 @@ void Game::quit() {
 void Game::update() {
 	e.input->update();
 	e.camera->update();
-	bloodBatch->addParticle(glm::vec2(500, 300), glm::vec2(rand()%20 - 10, rand()%20 - 10), 5, 5, Color(180, 0, 0, 255));
-	bloodEngine->update();
 	level->update();
+	bloodEngine->update();
 }
 
 void Game::draw() {

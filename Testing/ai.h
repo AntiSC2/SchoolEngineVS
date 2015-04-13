@@ -5,6 +5,7 @@
 #endif
 #include <gl/glew.h>
 
+class ParticleBatch2D;
 class Player;
 
 class AI {
@@ -12,7 +13,7 @@ public:
 	AI();
 	~AI();
 
-	void update(Player* player);
+	void update(Player* player, ParticleBatch2D* batch);
 	void render(SpriteBatch* batch);
 	glm::ivec4 destRect;
 	bool knockback = false;

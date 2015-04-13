@@ -4,7 +4,8 @@
 #include <Graphics/texture.h>
 #include <Graphics/spritebatch.h>
 
-Level::Level() {
+Level::Level(ParticleBatch2D* batch) {
+	batchBlood = batch;
 	player = new Player(576, 464);
 	backgroundID = RM::TextureCache->createTexture("resources/textures/jab.png")->getID();
 	ai = new AI;
@@ -17,7 +18,7 @@ Level::~Level() {
 
 void Level::update() {
 	player->update();
-	ai->update(player);
+	ai->update(player, batchBlood);
 	if (player->createJab) {
 		player->createJab = false;
 		if (player->direction == 1)
