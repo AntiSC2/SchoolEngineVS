@@ -13,10 +13,15 @@ int Input::mx;
 int Input::my;
 int Input::mb;
 bool Input::mg = false;
+bool Input::mouseMoved = false;
 
 void Input::update() {
+	mouseMoved = false;
    while (SDL_PollEvent(&event)) {
       switch (event.type) {
+	     case SDL_MOUSEMOTION:
+			 mouseMoved = true;
+			 break;
          case SDL_QUIT:
             quit = true;
             break;
@@ -74,6 +79,15 @@ bool Input::mouseClicked(unsigned int button) {
    }
    clickedButtons.push_back(button);
    return true;
+}
+
+bool Input::mousePressed(unsigned int button) {
+	bool clicked = mb == button;
+	return mb;
+}
+
+bool Input::getMouseMove() {
+	return mouseMoved;
 }
 
 int Input::getMouseButton() {

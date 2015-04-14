@@ -18,6 +18,7 @@ class Input {
       bool quit = false;
       static int mx, my, mb;
       static bool mg;
+	  static bool mouseMoved;
    public:
       Input();
       void update();
@@ -29,6 +30,8 @@ class Input {
       static int getDY();
       static int getMouseButton();
       static bool mouseGrabbed();
+	  static bool mousePressed(unsigned int button);
+	  static bool getMouseMove();
       static int getMouseX(Camera2D* camera);
       static int getMouseY(Camera2D* camera);
       bool windowClosed();
