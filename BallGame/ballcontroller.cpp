@@ -35,8 +35,8 @@ void BallController::updateBalls(std::vector<Ball>& balls, int maxX, int maxY) {
 				ball.vel.x *= -1;
 			}
 		}
-		if (ball.pos.y < 0.0f) {
-			ball.pos.y = 0.0f;
+		if (ball.pos.y - ball.radius < 0.0f) {
+			ball.pos.y = 0.0f + ball.radius;
 			if (ball.vel.y < 0.0f) {
 				ball.vel.y *= -1.0f;
 			}
@@ -100,12 +100,16 @@ void BallController::checkCollision(Ball& ball1, Ball& ball2) {
 	if (collisionDepth > 0) {
 
 		// Push away the less massive one
-		if (ball1.mass < ball2.mass) {
+		/*if (ball1.mass < ball2.mass) {
 			ball1.pos -= distDir * collisionDepth;
 		}
 		else {
 			ball2.pos += distDir * collisionDepth;
-		}
+		}*/
+		glm::vec2 distHalf = distDir * collisionDepth;
+		distHalf /= 2;
+		ball1.pos -= distHalf;
+		ball2.pos += distHalf;
 
 		// Calculate deflection. http://stackoverflow.com/a/345863
 		float aci = glm::dot(ball1.vel, distDir) / ball2.mass;

@@ -84,16 +84,19 @@ void Game::update() {
 	else if (Input::keyPressed(SDL_SCANCODE_DOWN)) {
 		ballController.setGravityDirection(GravityDirection::DOWN);
 	}
+	else if (Input::keyPressed(SDL_SCANCODE_SPACE)) {
+		ballController.setGravityDirection(GravityDirection::NONE);
+	}
 	if (Input::mousePressed(SDL_BUTTON_LEFT) && mousePressed == false) {
 		ballController.onMouseDown(balls, Input::getMouseX(e.camera), Input::getMouseY(e.camera));
 		mousePressed = 1;
 	}
+	if (Input::getMouseMove()) {
+		ballController.onMouseMove(balls, Input::getMouseX(e.camera), Input::getMouseY(e.camera));
+	}
 	if (mousePressed && Input::mousePressed(SDL_BUTTON_LEFT) == 0) {
 		ballController.onMouseUp(balls);
 		mousePressed = 0;
-	}
-	if (Input::getMouseMove()) {
-		ballController.onMouseMove(balls, Input::getMouseX(e.camera), Input::getMouseY(e.camera));
 	}
 	ballController.updateBalls(balls, 1280, 720);
 }
@@ -114,6 +117,9 @@ void Game::addBall(int randX, int randY) {
 
 	int randR = rand() % 16 + 16;
 	int randM = rand() % 10 + randR;
+	int randomRed = rand() % 225 + 30;
+	int randomGreen = rand() % 225 + 30;
+	int randomBlue = rand() % 225 + 30;
 
-	balls.emplace_back(randR, randM, glm::vec2((float)randX, (float)randY), glm::vec2(0.0f, 0.0f), "resources/textures/circle.png", Color(255, 255, 255, 255));
+	balls.emplace_back(randR, randM, glm::vec2((float)randX, (float)randY), glm::vec2(0.0f, 0.0f), "resources/textures/circle.png", Color(randomRed, randomGreen, randomBlue, 255));
 }
